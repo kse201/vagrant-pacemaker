@@ -1,0 +1,11 @@
+{
+  "cluster_name": "testcluster",
+  "cluster_user": "hacluster",
+  "cluster_group": "haclient",
+  "cluster_password": "hacluster",
+  "hostname_prefix": "node",
+  "address_prefix": "172.17.8",
+  "token_coefficient": 214,
+  "ring_number": 0,
+  "num_node": 1
+}

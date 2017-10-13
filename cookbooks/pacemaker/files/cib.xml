@@ -1,0 +1,39 @@
+<cib crm_feature_set="3.0.11" validate-with="pacemaker-2.6" epoch="54" num_updates="0" admin_epoch="0" cib-last-written="Thu Oct 12 10:42:39 2017" update-origin="vmnode1" update-client="cibadmin" update-user="root" have-quorum="1">
+  <configuration>
+    <crm_config>
+      <cluster_property_set id="cib-bootstrap-options">
+        <nvpair id="cib-bootstrap-options-have-watchdog" name="have-watchdog" value="false"/>
+        <nvpair id="cib-bootstrap-options-dc-version" name="dc-version" value="1.1.16-1.el7-94ff4df"/>
+        <nvpair id="cib-bootstrap-options-cluster-infrastructure" name="cluster-infrastructure" value="corosync"/>
+        <nvpair id="cib-bootstrap-options-cluster-name" name="cluster-name" value="testcluster"/>
+        <nvpair id="cib-bootstrap-options-no-quorum-policy" name="no-quorum-policy" value="suicide"/>
+        <nvpair id="cib-bootstrap-options-stonith-enabled" name="stonith-enabled" value="true"/>
+        <nvpair id="cib-bootstrap-options-startup-fencing" name="startup-fencing" value="false"/>
+        <nvpair id="cib-bootstrap-options-stonith-action" name="stonith-action" value="poweroff"/>
+        <nvpair id="cib-bootstrap-options-maintenance-mode" name="maintenance-mode" value="false"/>
+      </cluster_property_set>
+    </crm_config>
+    <nodes>
+      <node id="1" uname="vmnode1"/>
+      <node id="2" uname="vmnode2"/>
+    </nodes>
+    <resources>
+      <primitive class="stonith" id="FooSuicide" type="suicide">
+        <instance_attributes id="FooSuicide-instance_attributes">
+          <nvpair id="FooSuicide-instance_attributes-pcmk_off_action" name="pcmk_off_action" value="/usr/sbin/shutdown -h now"/>
+        </instance_attributes>
+        <operations>
+          <op id="FooSuicide-monitor-interval-3600" interval="3600" name="monitor" timeout="20"/>
+        </operations>
+      </primitive>
+      <primitive class="systemd" id="FooDB" type="postgresql-9.4">
+        <operations>
+          <op id="FooDB-monitor-interval-60" interval="60" name="monitor" timeout="100"/>
+          <op id="FooDB-start-interval-0s" interval="0s" name="start" timeout="100"/>
+          <op id="FooDB-stop-interval-0s" interval="0s" name="stop" timeout="100"/>
+        </operations>
+      </primitive>
+    </resources>
+    <constraints/>
+  </configuration>
+</cib>

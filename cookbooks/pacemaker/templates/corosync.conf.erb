@@ -1,0 +1,28 @@
+totem {
+    version: 2
+    secauth: off
+    cluster_name: <%= @cluster_name %>
+    transport: udpu
+    token_coefficient <%= @token_coefficient %>
+}
+
+nodelist {
+<%- @num_node.times do |i| -%>
+<%- i += 1 -%>
+    node {
+        ring<%= @ring_number %>_addr: <%= "%s%02d" % [@hostname_prefix, i] %>
+        nodeid: <%= i %>
+    }
+<%- end -%>
+}
+
+quorum {
+    provider: corosync_votequorum
+    two_node: 1
+}
+
+logging {
+    to_logfile: yes
+    logfile: /var/log/cluster/corosync.log
+    to_syslog: yes
+}
