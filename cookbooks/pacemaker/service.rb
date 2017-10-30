@@ -1,5 +1,5 @@
-%w[corosync pacemaker ].each do |name|
+%w[pcsd].each do |name|
   service name do
-    action [:enable, :start]
+    action %i[enable start]
   end
 end

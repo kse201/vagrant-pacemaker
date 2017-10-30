@@ -1,14 +1,19 @@
 #!/bin/sh
 
-yum install -y git openssl-devel readline-devel zlib-devel @'Development tools'
+sudo yum install -y git openssl-devel readline-devel zlib-devel @'Development tools'
 
-mkdir -p /opt
+sudo mkdir -p /opt
 git clone https://github.com/sstephenson/rbenv.git /opt/rbenv
 git clone https://github.com/sstephenson/ruby-build.git /opt/rbenv/plugins/ruby-build
 /opt/rbenv/src/configure && make -C /opt/rbenv/src
 
-echo 'export PATH="/opt/rbenv/bin:$PATH"' >> /etc/profile.d/rbenv.sh
-echo 'eval "$(/opt/rbenv/bin/rbenv init -)"'  >> /etc/profile.d/rbenv.sh
+sudo echo 'export RBENV_ROOT="/opt/rbenv"' > /etc/profile.d/rbenv.sh
+sudo echo 'export PATH="/opt/rbenv/bin:$PATH"' >> /etc/profile.d/rbenv.sh
+sudo echo 'eval "$(/opt/rbenv/bin/rbenv init --no-rehash -)"'  >> /etc/profile.d/rbenv.sh
+exec $SHELL
 
+sudo /opt/rbenv/plugins/ruby-build/install.sh
 /opt/rbenv/bin/rbenv install 2.4.2
 /opt/rbenv/bin/rbenv global 2.4.2
+
+gem install bundle
